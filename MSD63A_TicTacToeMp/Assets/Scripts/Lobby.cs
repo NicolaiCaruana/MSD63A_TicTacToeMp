@@ -4,6 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Lobby : MonoBehaviourPunCallbacks
 {
@@ -24,6 +25,11 @@ public class Lobby : MonoBehaviourPunCallbacks
 
     [Tooltip("Button Create Room")]
     public GameObject BtnCreateRoom;
+
+    List<RoomInfo> availableRooms = new List<RoomInfo>();
+
+    UnityEngine.Events.UnityAction buttonCallback;
+
 
 
     // Start is called before the first frame update
@@ -56,6 +62,50 @@ public class Lobby : MonoBehaviourPunCallbacks
       
     }
 
+    public override void OnCreatedRoom()
+    {
+        PhotonNetwork.NickName = InputPlayerName.GetComponent<TMP_InputField>().text;
+        PhotonNetwork.LoadLevel("MainGame");
+
+    }
+
+    public override void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
+        print("Number of Rooms:" + roomList.Count);
+        availableRooms = roomList;
+        UpdateRoomList();
+
+    }
+
+    private void UpdateRoomList()
+    {
+        foreach(RoomInfo roomInfo in availableRooms)
+        {
+            //Instatiate the row room prefab
+            GameObject rowRoom = Instantiate(RowRoom);
+            rowRoom.transform.parent = ScrollViewContent.transform;
+            rowRoom.transform.localScale = Vector3.one;
+
+            //update the prefab with room details
+            rowRoom.transform.Find("RoomName").GetComponent<TextMeshProUGUI>().text = roomInfo.Name;
+            rowRoom.transform.Find("RoomPlayers").GetComponent<TextMeshProUGUI>().text
+                = roomInfo.PlayerCount.ToString();
+
+            //assign button callback
+            buttonCallback = () => this.OnClickJoinRoom(roomInfo.Name);
+            rowRoom.transform.Find("BtnJoin").GetComponent<Button>().onClick.AddListener(buttonCallback);
+
+        }
+
+    }
+
+    public void OnClickJoinRoom(string roomName)
+    {
+        //set our player name
+        PhotonNetwork.NickName = InputPlayerName.GetComponent<TMP_InputField>().text;
+        //join the room
+        PhotonNetwork.JoinRoom(roomName);
+    }
 
     private void OnGUI()
     {
