@@ -524,12 +524,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fa2ce2208e0749f88766c5348c3dc9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScrollViewContent: {fileID: 0}
-  RowRoom: {fileID: 0}
-  InputPlayerName: {fileID: 0}
-  InputRoomName: {fileID: 0}
-  Status: {fileID: 0}
-  BtnCreateRoom: {fileID: 0}
+  ScrollViewContent: {fileID: 1702540019}
+  RowRoom: {fileID: 3725585334898859492, guid: 02a1d12707a5544379e00ef125a3474c, type: 3}
+  InputPlayerName: {fileID: 1829218405}
+  InputRoomName: {fileID: 2130271072}
+  Status: {fileID: 1328405987}
+  BtnCreateRoom: {fileID: 740496729}
 --- !u!4 &483059895
 Transform:
   m_ObjectHideFlags: 0
@@ -865,8 +865,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1088015615}
   m_HandleRect: {fileID: 1088015614}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.532343
+  m_Value: 1.0000001
+  m_Size: 0.53234303
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1091,7 +1091,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 740496732}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 483059894}
+        m_TargetAssemblyTypeName: Lobby, Assembly-CSharp
+        m_MethodName: OnClickCreateRoom
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &740496732
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1478,7 +1490,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1729499243}
   m_HandleRect: {fileID: 1729499242}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
