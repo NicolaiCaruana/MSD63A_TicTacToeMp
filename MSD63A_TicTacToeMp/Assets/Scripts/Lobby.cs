@@ -26,6 +26,13 @@ public class Lobby : MonoBehaviourPunCallbacks
     [Tooltip("Button Create Room")]
     public GameObject BtnCreateRoom;
 
+    [Tooltip("Panel Lobby")]
+    public GameObject PanelLobby;
+
+    [Tooltip("Panel waiting for other player")]
+    public GameObject PanelWaitingForPlayer;
+
+
     List<RoomInfo> availableRooms = new List<RoomInfo>();
 
     UnityEngine.Events.UnityAction buttonCallback;
@@ -65,7 +72,24 @@ public class Lobby : MonoBehaviourPunCallbacks
     public override void OnCreatedRoom()
     {
         PhotonNetwork.NickName = InputPlayerName.GetComponent<TMP_InputField>().text;
-        PhotonNetwork.LoadLevel("MainGame");
+        //PhotonNetwork.LoadLevel("MainGame");
+
+    }
+
+    public override void OnJoinedRoom()
+    {
+        print("on joined room");
+        PanelLobby.SetActive(false);
+        PanelWaitingForPlayer.SetActive(true);
+    }
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+     
+        if(PhotonNetwork.CurrentRoom.PlayerCount == 2)
+        {
+            PhotonNetwork.LoadLevel("MainGame");
+        }
 
     }
 

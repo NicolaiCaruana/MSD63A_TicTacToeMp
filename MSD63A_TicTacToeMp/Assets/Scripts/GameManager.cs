@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     public List<Player> players = new List<Player>(); //going to store 2 players
     public Player currentActivePlayer; //current player's turn
@@ -14,11 +15,34 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //--temp code
-        players.Add(new Player() { id = Player.Id.Player1, nickname = "P1", assignedFruit = Fruit.FruitType.Apple });
-        players.Add(new Player() { id = Player.Id.Player2, nickname = "P2", assignedFruit = Fruit.FruitType.Strawberry });
+        //players.Add(new Player() { id = Player.Id.Player1, nickname = "P1", assignedFruit = Fruit.FruitType.Apple });
+        //players.Add(new Player() { id = Player.Id.Player2, nickname = "P2", assignedFruit = Fruit.FruitType.Strawberry });
         //-end temp code
 
+        Photon.Realtime.Player[] allPlayers = PhotonNetwork.PlayerList;
+        foreach(Photon.Realtime.Player player in allPlayers)
+        {
+            if (player.ActorNumber == 1)
+                players.Add(new Player()
+                {
+                    id = Player.Id.Player1,
+                    nickname = player.NickName,
+                    assignedFruit = Fruit.FruitType.Apple
+                });
+            else if (player.ActorNumber == 2)
+                players.Add(new Player() { id = Player.Id.Player2, nickname = player.NickName,
+                    assignedFruit = Fruit.FruitType.Strawberry });
+        }
+
+        ChangeTopNames();
+
         ChangeActivePlayer();
+    }
+
+    private void ChangeTopNames()
+    {
+        canvasManager.ChangeTopNames(players.Find(x => x.id == Player.Id.Player1).nickname,
+            players.Find(x => x.id == Player.Id.Player2).nickname);
     }
 
     public void ChangeActivePlayer()
