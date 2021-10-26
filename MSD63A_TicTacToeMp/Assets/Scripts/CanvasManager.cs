@@ -11,6 +11,8 @@ public class CanvasManager : MonoBehaviour
     public Sprite fruitStrawberry;
     public Sprite fruitEmpty;
 
+    public GameManager gameManager;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -69,6 +71,9 @@ public class CanvasManager : MonoBehaviour
     {
         PointerEventData pointerEventData = (PointerEventData)baseEvent;
         print(pointerEventData.pointerClick.gameObject.name);
+        //call the SelectBoardPiece() in GameManager
+        gameManager.SelectBoardPiece(pointerEventData.pointerClick.gameObject);
+
     }
 
     /// <summary>
