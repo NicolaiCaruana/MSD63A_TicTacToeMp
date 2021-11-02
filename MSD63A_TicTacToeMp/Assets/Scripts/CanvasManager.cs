@@ -12,6 +12,7 @@ public class CanvasManager : MonoBehaviour
     public Sprite fruitEmpty;
 
     public GameManager gameManager;
+    public NetworkManager networkManager;
 
     // Start is called before the first frame update
     void Start()
@@ -72,8 +73,8 @@ public class CanvasManager : MonoBehaviour
         PointerEventData pointerEventData = (PointerEventData)baseEvent;
         print(pointerEventData.pointerClick.gameObject.name);
         //call the SelectBoardPiece() in GameManager
-        gameManager.SelectBoardPiece(pointerEventData.pointerClick.gameObject);
-
+        //gameManager.SelectBoardPiece(pointerEventData.pointerClick.gameObject);
+        networkManager.NotifySelectBoardPiece(pointerEventData.pointerClick.gameObject);
     }
 
     /// <summary>

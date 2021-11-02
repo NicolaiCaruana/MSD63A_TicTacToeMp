@@ -47,7 +47,7 @@ public class Lobby : MonoBehaviourPunCallbacks
 
         if (!PhotonNetwork.IsConnected)
         {
-            PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = "1.0";
+            PhotonNetwork.PhotonServerSettings.AppSettings.AppVersion = "1.1";
             PhotonNetwork.ConnectUsingSettings();
         }
     }
